@@ -1,83 +1,64 @@
-____________________________________________________________________________________
+# Clasificación de calidad de frutas con visión por computadora
 
+Proyecto final del curso **Algoritmos y Programación III (2026-2)**, Ingeniería de Sistemas, Universidad Icesi, Cali, Colombia.
 
-# Project Template
-This is the template for the Project I course at the IA Master, Universidad Icesi, Cali Colombia
+## Integrantes
 
-This template is based on the template proposed by the [Data Science Working Group] (https://github.com/sfbrigade/data-science-wg) Code for the [San Francisco’s Code initiative](https://github.com/sfbrigade/data-science-wg) 
+| Nombre | GitHub |
+|---|---|
+| Cristina Angulo | [@cristalNova](https://github.com/cristalNova) |
+| Samuel Navia (A00405006) |  |
 
-*Instructions: Edit this template filling in the titles, information, and links! Feel free to stray a bit to suit your project but try to provide the main information for reviews and feedback purposes.*
-## Remove this table after updating your project's information
-____________________________________________________________________________________
+## Objetivo
 
-# Project Name
-This project is a part of the  **Proyecto 1 de Innovación Tecnológica** course in the Applied Artificial Intelligence Master, Universidad Icesi, Cali Colombia. 
+El proyecto desarrolla un sistema automático que, a partir de una fotografía de una fruta individual sobre fondo uniforme, **asigna una clase de calidad** (Buena, Regular o Mala) y **estima su tamaño** (Pequeño, Mediano o Grande). Su propósito es reducir la subjetividad, la lentitud y las pérdidas propias de la clasificación manual en mercados y agroindustria.
 
-#### -- Project Status: [Active, On-Hold, Completed]
+## Metodología
 
-## Contributing Members
+El trabajo se organiza según la metodología **CRISP-DM**. Cada fase cuenta con una carpeta que reúne la evidencia correspondiente:
 
-**Team Leader: [Full Name](https://github.com/[github handle])(@slackHandle)**
-**Instructor: [Full Name](https://github.com/[github handle])(@slackHandle)**
+| Fase | Carpeta |
+|---|---|
+| 1. Comprensión del negocio | [`1_comprension_negocio/`](1_comprension_negocio) |
+| 2. Comprensión de los datos | [`2_comprension_datos/`](2_comprension_datos) |
+| 3. Preparación de los datos | [`3_preparacion_datos/`](3_preparacion_datos) |
+| 4. Modelado (dos modelos de aprendizaje automático tradicional y uno de aprendizaje profundo) | [`4_modelado/`](4_modelado) |
+| 5. Evaluación | [`5_evaluacion/`](5_evaluacion) |
+| 6. Despliegue (interfaz gráfica) | [`6_despliegue/`](6_despliegue) |
 
-#### Other Members:
+## Estructura del repositorio
 
-|Name     |  Email   | 
-|---------|-----------------|
-|[Full Name](https://github.com/[github handle])| @johnDoe        |
-|[Full Name](https://github.com/[github handle]) |     @janeDoe    |
+```
+├── 1_comprension_negocio/ … 6_despliegue/   # Una carpeta por fase de CRISP-DM
+├── src/                                      # Código reutilizable (data, features, models, evaluation, utils)
+├── data/                                     # raw/ (Kaggle), propias/ (imágenes y anotaciones), processed/
+├── experiments/                              # logs, checkpoints, results (métricas y gráficas)
+├── tests/
+├── docs/                                     # Informe, ética, impactos, formulación matemática, video
+├── requirements.txt
+└── README.md
+```
 
-## Contact
-* Feel free to contact the team leader or the instructor with any questions or if you are interested in contributing!
+## Documentación complementaria
 
+- **Ética:** [`docs/etica.md`](docs/etica.md)
+- **Impactos global, social, ambiental y económico:** [`1_comprension_negocio/README.md`](1_comprension_negocio/README.md#18-impactos-de-la-solución)
+- **Formulación y fundamentos matemáticos:** [`docs/formulacion_matematica.md`](docs/formulacion_matematica.md)
+- **Informe final (PDF):** [`docs/informe/`](docs/informe)
+- **Video de presentación (máximo 10 minutos):** [`docs/video/`](docs/video)
 
-## Project Intro/Objective
-The purpose of this project is ________. (Describe the main goals of the project and potential civic impact. Limit to a short paragraph, 3-6 Sentences)
+## Datos
 
-### Partner
-This section should be added when there's a partner institution 
-* [Name of Partner organization/Government department etc..]
-* Website for partner
-* Partner contact: [Name of Contact], [slack handle of contact if any]
-* If you do not have a partner leave this section out
+El proyecto utiliza el conjunto de referencia [Fruit Quality Classification (Kaggle)](https://www.kaggle.com/datasets/ryandpark/fruit-quality-classification), complementado con imágenes propias y con las anotaciones compartidas entre los grupos del curso. Las instrucciones de obtención y las fuentes se describen en [`data/README.md`](data/README.md).
 
-### Methods Used
-* Inferential Statistics
-* Machine Learning
-* Data Visualization
-* Predictive Modeling
-* etc.
+## Ejecución
 
-### Technologies
-* R 
-* Python
-* D3
-* PostGres, MySql
-* Pandas, jupyter
-* HTML
-* JavaScript
-* etc. 
+1. Clonar el repositorio y crear un entorno virtual.
+2. Instalar las dependencias: `pip install -r requirements.txt`.
+3. Iniciar la aplicación: `streamlit run 6_despliegue/app.py`.
+4. Ejecutar las pruebas: `python -m pytest -q tests`.
 
-## Project Description
-(Provide a more detailed overview of the project.  Talk a bit about your data sources and what questions and hypotheses you are exploring. What specific data analysis/visualization and modeling work are you using to solve the problem? What blockers and challenges are you facing?  Feel free to number or bullet point things here)
+Para reproducir el entrenamiento, obtener primero las imágenes según `data/README.md` y generar los datos procesados siguiendo `3_preparacion_datos/README.md`.
+## Licencia
 
-## Getting Started
-Instructions for contributors
-1. Clone this repo (for help see this [tutorial](https://help.github.com/articles/cloning-a-repository/)).
-2. Raw Data is being kept [here](Repo folder containing raw data) within this repo.
-
-    *If using offline data mention that and how contributors may obtain the data )*
-    
-3. Data processing/transformation scripts are being kept [here](Repo folder containing data processing scripts/notebooks)
-4. etc...
-
-*If your project is well underway and setup is fairly complicated (ie. requires installation of many packages) create another "setup.md" file and link to it here*  
-
-5. Follow setup [instructions](Link to file)
-
-## Featured Notebooks/Analysis/Deliverables
-* [Notebook/Markdown/Slide Deck Title](link)
-* [Notebook/Markdown/Slide DeckTitle](link)
-* [Blog Post](link)
-
-
+Véase [`LICENSE`](LICENSE).
