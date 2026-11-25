@@ -1,0 +1,254 @@
+{
+  "validacion": {
+    "n": 1250,
+    "exactitud": 0.5136,
+    "f1_macro": 0.226215644820296,
+    "por_clase": {
+      "buena": {
+        "precision": 0.5136,
+        "recall": 1.0,
+        "f1-score": 0.678646934460888,
+        "support": 642.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 136.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 472.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        642,
+        0,
+        0
+      ],
+      [
+        136,
+        0,
+        0
+      ],
+      [
+        472,
+        0,
+        0
+      ]
+    ]
+  },
+  "prueba": {
+    "n": 1250,
+    "exactitud": 0.5128,
+    "f1_macro": 0.2259827251894941,
+    "por_clase": {
+      "buena": {
+        "precision": 0.5128,
+        "recall": 1.0,
+        "f1-score": 0.6779481755684823,
+        "support": 641.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 137.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 472.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        641,
+        0,
+        0
+      ],
+      [
+        137,
+        0,
+        0
+      ],
+      [
+        472,
+        0,
+        0
+      ]
+    ]
+  },
+  "prueba_kaggle": {
+    "n": 699,
+    "exactitud": 0.47639484978540775,
+    "f1_macro": 0.3226744186046512,
+    "por_clase": {
+      "buena": {
+        "precision": 0.47639484978540775,
+        "recall": 1.0,
+        "f1-score": 0.6453488372093024,
+        "support": 333.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 366.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        333,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        366,
+        0,
+        0
+      ]
+    ]
+  },
+  "prueba_companeros": {
+    "n": 445,
+    "exactitud": 0.5235955056179775,
+    "f1_macro": 0.22910521140609638,
+    "por_clase": {
+      "buena": {
+        "precision": 0.5235955056179775,
+        "recall": 1.0,
+        "f1-score": 0.6873156342182891,
+        "support": 233.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 116.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 96.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        233,
+        0,
+        0
+      ],
+      [
+        116,
+        0,
+        0
+      ],
+      [
+        96,
+        0,
+        0
+      ]
+    ]
+  },
+  "prueba_drive2": {
+    "n": 106,
+    "exactitud": 0.7075471698113207,
+    "f1_macro": 0.27624309392265195,
+    "por_clase": {
+      "buena": {
+        "precision": 0.7075471698113207,
+        "recall": 1.0,
+        "f1-score": 0.8287292817679558,
+        "support": 75.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 21.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 10.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        75,
+        0,
+        0
+      ],
+      [
+        21,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ]
+    ]
+  },
+  "propias": {
+    "n": 106,
+    "exactitud": 0.9056603773584906,
+    "f1_macro": 0.4752475247524752,
+    "por_clase": {
+      "buena": {
+        "precision": 0.9056603773584906,
+        "recall": 1.0,
+        "f1-score": 0.9504950495049505,
+        "support": 96.0
+      },
+      "regular": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 10.0
+      },
+      "mala": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 0.0
+      }
+    },
+    "matriz_confusion": [
+      [
+        96,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  }
+}
