@@ -1,0 +1,25 @@
+modelo,conjunto,n,exactitud,f1_macro
+Línea base,Prueba,1250,0.513,0.226
+Línea base,Prueba Kaggle,699,0.476,0.323
+Línea base,Prueba compañeros,445,0.524,0.229
+Línea base,Prueba fotos adicionales,106,0.708,0.276
+Línea base,Fotos propias,106,0.906,0.475
+Línea base,Validación,1250,0.514,0.226
+SVM,Prueba,1250,0.958,0.949
+SVM,Prueba Kaggle,699,0.969,0.969
+SVM,Prueba compañeros,445,0.955,0.945
+SVM,Prueba fotos adicionales,106,0.906,0.848
+SVM,Fotos propias,106,0.811,0.45
+SVM,Validación,1250,0.959,0.951
+Random Forest,Prueba,1250,0.944,0.936
+Random Forest,Prueba Kaggle,699,0.947,0.95
+Random Forest,Prueba compañeros,445,0.962,0.954
+Random Forest,Prueba fotos adicionales,106,0.849,0.749
+Random Forest,Fotos propias,106,0.642,0.391
+Random Forest,Validación,1250,0.95,0.939
+CNN,Prueba,1250,0.864,0.829
+CNN,Prueba Kaggle,699,0.853,0.892
+CNN,Prueba compañeros,445,0.919,0.892
+CNN,Prueba fotos adicionales,106,0.708,0.641
+CNN,Fotos propias,106,0.698,0.569
+CNN,Validación,1250,0.884,0.848
