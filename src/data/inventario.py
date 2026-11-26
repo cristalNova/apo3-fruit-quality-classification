@@ -1,3 +1,5 @@
+"""Cataloga las imágenes de cada fuente (fruta, calidad, tamaño, duplicados exactos y estadísticas de color) en un CSV."""
+
 import argparse
 import hashlib
 import re
@@ -34,6 +36,7 @@ CALIDADES = {
 
 
 def tipo_archivo(nombre):
+    """Clasifica el archivo como original, aumentada o captura de pantalla según su nombre."""
     if re.search(r"_aug_|^rotated_by_|^aug_", nombre, re.I):
         return "aumentada"
     if re.search(r"captura de pantalla|screen ?shot", nombre, re.I):
@@ -42,6 +45,7 @@ def tipo_archivo(nombre):
 
 
 def calidad_y_fruta(partes):
+    """Deduce la calidad y la fruta a partir de las carpetas de la ruta."""
     calidad = CALIDADES.get(partes[0].lower().split()[0].split("_")[0])
     for parte in partes[1:-1]:
         clave = parte.lower().split("_")[0]
@@ -51,6 +55,7 @@ def calidad_y_fruta(partes):
 
 
 def dimensiones(ruta):
+    """Devuelve (ancho, alto) de la imagen, o (-1, -1) si no se puede abrir."""
     try:
         with Image.open(ruta) as im:
             return im.size
@@ -59,11 +64,13 @@ def dimensiones(ruta):
 
 
 def medir(ruta):
+    """Devuelve ancho, alto y tamaño en bytes del archivo."""
     ancho, alto = dimensiones(ruta)
     return ancho, alto, ruta.stat().st_size
 
 
 def catalogar(origen, raiz, preetiquetas=None):
+    """Recorre una fuente y construye la tabla de imágenes con origen, calidad, fruta y medidas."""
     rutas = [r for r in sorted(raiz.rglob("*")) if r.suffix.lower() in EXTENSIONES]
     with ThreadPool(16) as pool:
         medidas = pool.map(medir, rutas)
@@ -95,10 +102,12 @@ def catalogar(origen, raiz, preetiquetas=None):
 
 
 def calcular_md5(ruta):
+    """Calcula el hash MD5 del contenido de un archivo."""
     return hashlib.md5(Path(ruta).read_bytes()).hexdigest()
 
 
 def marcar_duplicados_exactos(df):
+    """Calcula el MD5 de los archivos de igual tamaño y marca los duplicados exactos."""
     df = df.copy()
     if "md5" not in df:
         df["md5"] = None
@@ -110,6 +119,7 @@ def marcar_duplicados_exactos(df):
 
 
 def estadisticas(ruta, lado=96):
+    """Mide el brillo, la saturación y el brillo del borde de una imagen reducida."""
     with Image.open(ruta) as im:
         im.draft("RGB", (lado * 2, lado * 2))
         rgb = np.asarray(im.convert("RGB").resize((lado, lado)), dtype=np.float32)
@@ -128,6 +138,7 @@ def estadisticas(ruta, lado=96):
 
 
 def agregar_estadisticas(df, por_grupo=60, semilla=0, procesos=4):
+    """Añade estadísticas de color a una muestra de imágenes por origen, fruta y calidad."""
     muestra = (df[df["lado_mayor"] > 0]
                .sample(frac=1, random_state=semilla)
                .groupby(["origen", "fruta", "calidad"], dropna=False)
@@ -138,6 +149,7 @@ def agregar_estadisticas(df, por_grupo=60, semilla=0, procesos=4):
 
 
 def main():
+    """Construye el inventario de imágenes desde la línea de comandos."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--fuente", action="append", default=[], metavar="NOMBRE=RUTA",
                         help="carpeta con subcarpetas de calidad y fruta")

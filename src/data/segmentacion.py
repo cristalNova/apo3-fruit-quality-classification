@@ -1,3 +1,5 @@
+"""Segmenta frutas individuales de una imagen (primer plano, GrabCut y separación de frutas en contacto) y las recorta."""
+
 from __future__ import annotations
 
 import argparse
@@ -21,6 +23,7 @@ EXTENSIONES = {".jpg", ".jpeg", ".png", ".webp", ".heic"}
 
 @dataclass
 class Fruta:
+    """Región de una fruta segmentada: caja, máscara, fracción de área, solidez y posible agrupación."""
 
     caja: tuple[int, int, int, int]
     mascara: np.ndarray
@@ -30,6 +33,7 @@ class Fruta:
 
 
 def cargar_imagen(ruta: Path) -> np.ndarray:
+    """Lee una imagen en RGB aplicando su orientación EXIF."""
     with Image.open(ruta) as im:
         return np.asarray(ImageOps.exif_transpose(im).convert("RGB"))
 
@@ -137,6 +141,7 @@ def segmentar_frutas(
     descartar_borde: bool = True,
     refinar: bool = True,
 ) -> list[Fruta]:
+    """Detecta las frutas de una imagen por color (saturación y brillo) con refinamiento GrabCut y devuelve una lista de Fruta."""
     alto0, ancho0 = rgb.shape[:2]
     escala = min(1.0, lado_trabajo / max(alto0, ancho0))
     if escala < 1.0:
@@ -206,6 +211,7 @@ def recortar_fruta(
     fondo: str = "original",
     lado_max: int | None = 512,
 ) -> np.ndarray:
+    """Recorta la caja de la fruta con un margen, con fondo original o blanco."""
     x, y, w, h = fruta.caja
     m = int(margen * max(w, h))
     x0, y0 = max(0, x - m), max(0, y - m)
@@ -229,6 +235,7 @@ def procesar_carpeta(
     lado_max: int | None = 512,
     **opciones,
 ) -> Path:
+    """Segmenta y recorta las imágenes de una carpeta y registra los recortes en un CSV."""
     salida.mkdir(parents=True, exist_ok=True)
     registro = salida / "recortes.csv"
     campos = [

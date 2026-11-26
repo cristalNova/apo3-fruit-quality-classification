@@ -1,3 +1,5 @@
+"""Extrae las 55 características de color y textura (histogramas HSV, momentos, región central y gradiente) de imágenes de 64×64."""
+
 import cv2
 import numpy as np
 
@@ -5,6 +7,7 @@ BINS_MATIZ, BINS_SATURACION, BINS_VALOR = 18, 8, 8
 
 
 def caracteristicas_imagen(rgb):
+    """Calcula las 55 características de color y textura de una imagen RGB."""
     hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
     gris = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY).astype(np.float32)
     h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
@@ -31,4 +34,5 @@ def caracteristicas_imagen(rgb):
 
 
 def caracteristicas(imagenes):
+    """Apila las características de una colección de imágenes."""
     return np.stack([caracteristicas_imagen(im) for im in imagenes])

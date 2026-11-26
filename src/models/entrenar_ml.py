@@ -1,3 +1,5 @@
+"""Entrena la línea base, la SVM y el Random Forest con búsqueda en rejilla y guarda modelos y resultados."""
+
 import sys
 import time
 

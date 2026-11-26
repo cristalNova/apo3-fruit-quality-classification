@@ -34,7 +34,7 @@ El trabajo se organiza según la metodología **CRISP-DM**. Cada fase cuenta con
 ├── data/                                     # raw/ (Kaggle), propias/ (imágenes y anotaciones), processed/
 ├── experiments/                              # logs, checkpoints, results (métricas y gráficas)
 ├── tests/
-├── docs/                                     # Informe, ética, impactos, formulación matemática, video
+├── docs/                                     # Informe, ética, formulación matemática, video
 ├── requirements.txt
 └── README.md
 ```
@@ -53,12 +53,16 @@ El proyecto utiliza el conjunto de referencia [Fruit Quality Classification (Kag
 
 ## Ejecución
 
-1. Clonar el repositorio y crear un entorno virtual.
-2. Instalar las dependencias: `pip install -r requirements.txt`.
-3. Iniciar la aplicación: `streamlit run 6_despliegue/app.py`.
-4. Ejecutar las pruebas: `python -m pytest -q tests`.
+1. Clonar el repositorio.
+2. Crear un entorno virtual e instalar las dependencias: `pip install -r requirements.txt`.
+3. Obtener los datos según [`data/README.md`](data/README.md).
+4. Ejecutar el flujo desde la raíz del repositorio (cada fase detalla sus opciones en su `README.md`):
+   - Fase 2: `python -m src.data.descargar_kaggle` y `python -m src.data.inventario ...`; el análisis exploratorio está en `2_comprension_datos/eda.ipynb`.
+   - Fase 3: `python -m src.data.preparar --reconstruir-indice`.
+   - Fase 4: `python -m src.models.entrenar_ml`, `python -m src.models.entrenar_alternativas` y `python -m src.models.entrenar_cnn 0 80` (también `1` y `2`).
+   - Fase 5: `python -m src.evaluation.analisis` y `python -m src.evaluation.errores`.
+   - Fase 6: `streamlit run 6_despliegue/app.py`.
 
-Para reproducir el entrenamiento, obtener primero las imágenes según `data/README.md` y generar los datos procesados siguiendo `3_preparacion_datos/README.md`.
 ## Licencia
 
 Véase [`LICENSE`](LICENSE).

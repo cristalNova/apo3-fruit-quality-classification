@@ -1,3 +1,5 @@
+"""Estima el tamaño relativo de la fruta (pequeño, mediano, grande) con el diámetro normalizado de su máscara."""
+
 import json
 from multiprocessing import Pool
 from pathlib import Path
@@ -12,6 +14,7 @@ RUTA_UMBRALES = Path("experiments/results/umbrales_tamano.json")
 
 
 def diametro_normalizado(rgb):
+    """Devuelve el diámetro normalizado de la fruta más grande (√(4A/π) sobre el lado menor) y su segmentación."""
     frutas = segmentar_frutas(rgb, descartar_borde=False, area_maxima=0.98)
     if not frutas:
         return None, None
@@ -21,6 +24,7 @@ def diametro_normalizado(rgb):
 
 
 def categoria(d_norm, umbrales):
+    """Devuelve la categoría de tamaño de un diámetro normalizado según los umbrales de la fruta."""
     return CATEGORIAS[int(np.searchsorted(umbrales, d_norm, side="right"))]
 
 
@@ -30,10 +34,12 @@ def _medir_archivo(ruta):
 
 
 def cargar_cache(ruta):
+    """Lee una imagen del disco en RGB."""
     return cargar_imagen(Path(ruta))
 
 
 def calcular_umbrales(indice, por_fruta=60, semilla=0):
+    """Calcula por fruta los terciles del diámetro normalizado en entrenamiento y los guarda en JSON."""
     base = indice[indice["particion"] == "entrenamiento"]
     muestra = pd.concat(
         g.sample(min(len(g), por_fruta), random_state=semilla) for _, g in base.groupby("fruta")
