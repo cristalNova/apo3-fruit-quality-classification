@@ -45,7 +45,7 @@ El trabajo se organiza según la metodología **CRISP-DM**. Cada fase cuenta con
 - **Impactos global, social, ambiental y económico:** [`1_comprension_negocio/README.md`](1_comprension_negocio/README.md#18-impactos-de-la-solución)
 - **Formulación y fundamentos matemáticos:** [`docs/formulacion_matematica.md`](docs/formulacion_matematica.md)
 - **Informe final (PDF):** [`docs/informe/`](docs/informe)
-- **Video de presentación (máximo 10 minutos):** [`docs/video/`](docs/video)
+- **Video de presentación (máximo 10 minutos):** [`Ver video`](https://youtu.be/klIFMDQXN34)
 
 ## Datos
 
