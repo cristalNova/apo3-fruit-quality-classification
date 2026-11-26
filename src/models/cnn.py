@@ -1,3 +1,5 @@
+"""Arquitectura de la CNN: tres bloques convolucionales con aumento de datos integrado."""
+
 import keras
 from keras import layers
 
@@ -5,6 +7,7 @@ CLASES = ["buena", "regular", "mala"]
 
 
 def construir_cnn(filtros=32, dropout=0.3, lado=64):
+    """Construye la CNN de tres bloques convolucionales con aumento de datos y salida softmax de tres clases."""
     entrada = keras.Input((lado, lado, 3))
     x = layers.Rescaling(1 / 255)(entrada)
     x = layers.RandomFlip("horizontal_and_vertical")(x)

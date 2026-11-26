@@ -14,7 +14,7 @@ La aplicación necesita los modelos `experiments/checkpoints/cnn.keras` y `exper
 ## Flujo
 
 1. La persona elige la fruta y carga o captura la fotografía.
-2. [`src/inferencia.py`](../src/inferencia.py) segmenta la fruta con [`segmentacion.py`](../src/data/segmentacion.py), la recorta y la redimensiona a 64 × 64 píxeles; si no encuentra fruta, usa la imagen completa.
+2. [`src/inferencia.py`](../src/inferencia.py) segmenta la fruta con [`segmentacion.py`](../src/data/segmentacion.py), la recorta y la redimensiona a 64 × 64 píxeles; si no encuentra fruta, usa la imagen completa. Si el borde de la fotografía es claro (fondo blanco o muy iluminado), la aplicación desactiva el filtro de brillo mínimo de la segmentación, que de lo contrario descarta como sombra las frutas muy oscuras, como un banano podrido; con fondos oscuros se mantiene el filtro, porque sin él la mesa se confunde con la fruta.
 3. La red convolucional estima la probabilidad de cada clase de calidad y el SVM entrega su propia predicción.
 4. El diámetro normalizado de la máscara se compara con los umbrales de la fruta elegida para asignar el tamaño: pequeño, mediano o grande.
 

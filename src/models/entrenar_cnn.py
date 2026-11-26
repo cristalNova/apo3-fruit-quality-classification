@@ -1,3 +1,5 @@
+"""Entrena una configuración de la CNN con punto de control y detención temprana, la evalúa y conserva la mejor."""
+
 import json
 import shutil
 import sys
@@ -19,11 +21,13 @@ CONFIGURACIONES = [
     {"filtros": 32, "dropout": 0.5, "lr": 3e-4},
 ]
 SEMILLA = 0
-PACIENCIA = 4
+PACIENCIA = 8
 EPOCAS_MINIMAS = 12
 
 
 class PuntoDeControl(keras.callbacks.Callback):
+    """Callback que guarda la historia y el estado en cada época y detiene el entrenamiento por paciencia o por tiempo."""
+
     def __init__(self, historia, ruta_historia, ruta_estado, ruta_mejor, segundos):
         super().__init__()
         self.historia, self.ruta_historia, self.ruta_estado, self.ruta_mejor = historia, ruta_historia, ruta_estado, ruta_mejor
@@ -45,6 +49,7 @@ class PuntoDeControl(keras.callbacks.Callback):
 
 
 def predecir_etiquetas(modelo):
+    """Devuelve una función que predice las etiquetas de calidad con el modelo."""
     return lambda X: np.array(CLASES)[modelo.predict(X, verbose=0).argmax(1)]
 
 

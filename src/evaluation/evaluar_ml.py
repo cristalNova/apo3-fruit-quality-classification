@@ -1,3 +1,5 @@
+"""Reevalúa modelos clásicos ya entrenados y actualiza su JSON de resultados."""
+
 import json
 import sys
 

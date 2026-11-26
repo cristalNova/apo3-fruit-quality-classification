@@ -8,7 +8,7 @@
 
 ## Fuentes
 
-- **Fruit Quality Classification** (Kaggle, ryandpark): <https://www.kaggle.com/datasets/ryandpark/fruit-quality-classification>. Se descarga y se descomprime en `data/raw/`. La carpeta *Mixed quality* se emplea para la evaluación y el enriquecimiento del conjunto, segmentando cada fruta.
+- **Fruit Quality Classification** (Kaggle, ryandpark): <https://www.kaggle.com/datasets/ryandpark/fruit-quality-classification>. Se descarga y se descomprime en `data/raw/`. La carpeta *Mixed quality* no se usa en esta versión: cada imagen contiene varias frutas y habría que segmentarlas y etiquetarlas una a una.
 - **Imágenes propias:** entre 30 y 50 fotografías como mínimo, tomadas en mercados, supermercados u hogares, que cubren distintos estados de madurez, tamaños y defectos.
 - **Anotaciones compartidas** por los demás grupos del curso, que se integran al conjunto de datos.
 - **Fotografías adicionales** de banano, guayaba, limón, manzana y naranja con etiqueta de calidad, que se integran al conjunto de datos como una tercera fuente (`drive2`) y no se versionan. Su preparación se describe en [`3_preparacion_datos/`](../3_preparacion_datos).

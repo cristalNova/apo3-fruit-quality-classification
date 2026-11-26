@@ -25,7 +25,46 @@ Se toman hasta 400 imágenes por combinación de fuente, fruta y calidad, con se
 | Prueba | 641 | 137 | 472 | 1.250 |
 | Fotos propias (externo) | 96 | 10 | 0 | 106 |
 
+El reparto 70/15/15 es habitual en conjuntos de este tamaño ([AWS Prescriptive Guidance, *Splits and data leakage*](https://docs.aws.amazon.com/prescriptive-guidance/latest/ml-operations-planning/splits-leakage.html), consultado el 25/11/2026) y deja 1.250 imágenes en validación y en prueba. No existe una regla general: Hastie, Tibshirani y Friedman (*The Elements of Statistical Learning*, 2.ª ed., 2009, cap. 7) mencionan como ejemplo 50/25/25. Se usa estratificación por fruta y calidad porque la clase Regular es minoritaria.
+
 Por fuente, Kaggle aporta 2.400 imágenes buenas y 2.400 malas (no contiene la clase Regular), las imágenes de otros grupos aportan 1.474 buenas, 750 regulares y 676 malas, y las fotografías adicionales aportan 401 buenas, 160 regulares y 72 malas. La clase Regular es la minoritaria, con el 10,9 % del entrenamiento; se compensa con ponderación de clases inversamente proporcional a su frecuencia. El aumento de datos (giros, rotación, brillo y contraste) se aplica solo en el entrenamiento de la red convolucional.
+
+## Justificación del tamaño del conjunto
+
+El tope de 400 imágenes por fuente, fruta y calidad es una decisión de balance entre fuentes, no un tamaño de muestra calculado. Tras los filtros hay 23.848 imágenes elegibles y se usan 8.333. El tope solo recorta a Kaggle y a las imágenes de otros grupos; las fotografías adicionales entran completas.
+
+| Fuente y calidad | Disponibles | Usadas |
+|---|---|---|
+| Kaggle buena | 11.664 | 2.400 |
+| Kaggle mala | 6.788 | 2.400 |
+| Otros grupos buena | 2.629 | 1.474 |
+| Otros grupos regular | 849 | 750 |
+| Otros grupos mala | 1.285 | 676 |
+| Fotografías adicionales (las tres clases) | 633 | 633 |
+
+Sin el tope, Kaggle pasaría de ser el 58 % de las imágenes usadas al 77 %, y la clase Regular, que Kaggle no contiene, caería del 10,9 % al 4,2 % del total, porque solo ganaría 99 imágenes (de 910 a 1.009). Eso reforzaría la confusión entre fuente y etiqueta detectada en la comprensión de los datos. Por eso el tope se fija para evitar que Kaggle domine, y no para ahorrar cómputo.
+
+Para comprobar que el tamaño actual no es el factor limitante se calculó una curva de aprendizaje con el SVM (hiperparámetros fijos de [`svm.json`](../experiments/results/svm.json)), entrenado con fracciones del conjunto de entrenamiento (cinco muestras estratificadas por fracción) y evaluado siempre sobre las mismas particiones:
+
+| Imágenes de entrenamiento | F1 macro en prueba | F1 macro en fotos propias |
+|---|---|---|
+| 291 | 0,777 ± 0,022 | 0,484 ± 0,072 |
+| 1.166 | 0,880 ± 0,004 | 0,429 ± 0,049 |
+| 2.916 | 0,929 ± 0,006 | 0,436 ± 0,018 |
+| 4.374 | 0,939 ± 0,003 | 0,449 ± 0,010 |
+| 5.833 (actual) | 0,949 | 0,450 |
+
+(Media ± desviación entre las cinco muestras; la tabla completa está en [`curva_aprendizaje.csv`](../experiments/results/curva_aprendizaje.csv) y la figura en [`curva_aprendizaje.svg`](../experiments/results/curva_aprendizaje.svg).)
+
+- **En distribución, más imágenes mejora el desempeño con rendimientos decrecientes:** pasar de 4.374 a 5.833 imágenes aporta +0,010 de F1 macro, y la variación entre muestras baja de 0,022 a 0,003.
+- **En las fotografías propias el desempeño no depende del tamaño** (F1 macro entre 0,43 y 0,48 en todos los tamaños). El cuello de botella es el cambio de dominio, no la cantidad de datos.
+- **El tamaño de las particiones fija la precisión de las métricas.** Con 1.250 imágenes de prueba, la exactitud del SVM (0,958) tiene un intervalo de confianza de Wilson del 95 % de [0,946; 0,968]. Para la clase Regular (137 imágenes de prueba), el recall del SVM tiene intervalo [0,84; 0,94]; con las 106 fotos propias, la exactitud tiene [0,73; 0,87]; y con las 10 imágenes malas de las fotografías adicionales, el recall tiene [0,40; 0,89]. La incertidumbre mayor está en las clases y fuentes pequeñas, no en el total.
+
+Limitaciones: los hiperparámetros provienen de la búsqueda con el conjunto completo, lo que favorece ligeramente a los tamaños pequeños; la curva solo cubre el SVM y no la red convolucional; y no puede mostrar qué ocurriría con más imágenes de las que hay en el entrenamiento actual. Una extrapolación aproximada sugiere una mejora de unos 0,02 de F1 en distribución si se usaran todas las imágenes elegibles, sin efecto esperado en las fotos propias.
+
+```bash
+python -m src.evaluation.curva_aprendizaje
+```
 
 ## Fotografías adicionales
 

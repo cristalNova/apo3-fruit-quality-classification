@@ -17,9 +17,9 @@ Random Forest,Prueba compañeros,445,0.962,0.954
 Random Forest,Prueba fotos adicionales,106,0.849,0.749
 Random Forest,Fotos propias,106,0.642,0.391
 Random Forest,Validación,1250,0.95,0.939
-CNN,Prueba,1250,0.864,0.829
-CNN,Prueba Kaggle,699,0.853,0.892
-CNN,Prueba compañeros,445,0.919,0.892
-CNN,Prueba fotos adicionales,106,0.708,0.641
-CNN,Fotos propias,106,0.698,0.569
-CNN,Validación,1250,0.884,0.848
+CNN,Prueba,1250,0.933,0.91
+CNN,Prueba Kaggle,699,0.94,0.952
+CNN,Prueba compañeros,445,0.955,0.943
+CNN,Prueba fotos adicionales,106,0.792,0.729
+CNN,Fotos propias,106,0.585,0.369
+CNN,Validación,1250,0.932,0.912

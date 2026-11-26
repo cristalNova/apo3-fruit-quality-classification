@@ -4,7 +4,7 @@ Esta fase entrena, ajusta y selecciona los modelos de clasificación de calidad.
 
 | Carpeta | Contenido |
 |---|---|
-| [`ml_tradicional/`](ml_tradicional) | SVM y Random Forest con búsqueda en rejilla y validación cruzada |
+| [`ml_tradicional/`](ml_tradicional) | SVM y Random Forest con búsqueda en rejilla y validación cruzada, más regresión logística y KNN como alternativas simples |
 | [`deep_learning/`](deep_learning) | Red convolucional pequeña, ajuste de hiperparámetros y curvas de entrenamiento |
 
 El código se encuentra en [`src/models`](../src/models). Los modelos finales se guardan en `experiments/checkpoints/` y las métricas en `experiments/results/`.
@@ -16,6 +16,8 @@ El código se encuentra en [`src/models`](../src/models). Los modelos finales se
 | Línea base (clase mayoritaria) | 0,23 | 0,23 | 0,91 | 0,48 |
 | SVM (kernel RBF) | 0,95 | 0,95 | 0,81 | 0,45 |
 | Random Forest | 0,94 | 0,94 | 0,64 | 0,39 |
-| CNN | 0,85 | 0,83 | 0,70 | 0,57 |
+| KNN (k = 1) | 0,95 | 0,94 | 0,47 | 0,40 |
+| Regresión logística | 0,72 | 0,73 | 0,48 | 0,37 |
+| CNN | 0,91 | 0,91 | 0,58 | 0,37 |
 
 El análisis completo está en [`5_evaluacion/`](../5_evaluacion).

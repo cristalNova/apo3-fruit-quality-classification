@@ -1,3 +1,5 @@
+"""Construye el índice estratificado 70/15/15, cachea las imágenes a 64×64 y recorta las fotos propias."""
+
 import argparse
 import time
 from multiprocessing.pool import ThreadPool
@@ -22,6 +24,7 @@ ORIGENES_ENTRENABLES = ["kaggle", "companeros", "drive2"]
 
 
 def construir_indice(inventario, salida, por_grupo=400, lado_minimo=128, semilla=0):
+    """Filtra el inventario, toma hasta `por_grupo` imágenes por origen, fruta y calidad y las reparte 70/15/15; las fotos propias quedan como prueba externa."""
     inv = pd.read_csv(inventario)
     calidades_por_hash = inv[inv["md5"].notna()].groupby("md5")["calidad"].nunique()
     conflictivos = set(calidades_por_hash[calidades_por_hash > 1].index)
@@ -58,6 +61,7 @@ def construir_indice(inventario, salida, por_grupo=400, lado_minimo=128, semilla
 
 
 def leer(ruta, lado):
+    """Lee una imagen, corrige su orientación y la reescala a lado × lado en RGB."""
     with Image.open(ruta) as im:
         im.draft("RGB", (lado * 4, lado * 4))
         im = ImageOps.exif_transpose(im).convert("RGB")
@@ -65,6 +69,7 @@ def leer(ruta, lado):
 
 
 def cachear(indice, carpeta, lado=64, tam_bloque=500, presupuesto=140):
+    """Guarda las imágenes del índice reescaladas en bloques .npy, hasta agotar el presupuesto de tiempo."""
     carpeta = Path(carpeta)
     carpeta.mkdir(parents=True, exist_ok=True)
     inicio = time.time()
@@ -83,10 +88,12 @@ def cachear(indice, carpeta, lado=64, tam_bloque=500, presupuesto=140):
 
 
 def cargar_arreglos(carpeta):
+    """Concatena los bloques .npy de la caché."""
     return np.concatenate([np.load(a) for a in sorted(Path(carpeta).glob("bloque_*.npy"))])
 
 
 def recortar_propias(indice, carpeta, lado=64):
+    """Segmenta y recorta la fruta de las fotos propias y devuelve qué fotos tuvieron segmentación."""
     destino = Path(carpeta) / "propias_recortes.npy"
     filas = indice[indice["particion"] == "propias"]
     recortes, con_segmentacion = [], []
@@ -102,6 +109,7 @@ def recortar_propias(indice, carpeta, lado=64):
 
 
 def cargar_dataset(indice, carpeta):
+    """Devuelve las imágenes del índice, con las fotos propias sustituidas por sus recortes."""
     X = cargar_arreglos(carpeta)
     propias = np.load(Path(carpeta) / "propias_recortes.npy")
     X[(indice["particion"] == "propias").to_numpy()] = propias

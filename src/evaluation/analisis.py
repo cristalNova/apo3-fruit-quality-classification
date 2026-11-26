@@ -1,3 +1,5 @@
+"""Genera predicciones, tabla resumen y figuras de comparación de modelos a partir de los resultados guardados."""
+
 import json
 from pathlib import Path
 
@@ -22,16 +24,19 @@ PARTICIONES = [("prueba", "Prueba"), ("prueba_kaggle", "Prueba Kaggle"), ("prueb
 
 
 def resultados_modelo(modelo):
+    """Lee el JSON de resultados de un modelo."""
     return json.loads((RESULTADOS / f"{modelo}.json").read_text())
 
 
 def guardar(fig, nombre):
+    """Guarda la figura en SVG y PDF."""
     for ext in ("svg", "pdf"):
         fig.savefig(RESULTADOS / f"{nombre}.{ext}", bbox_inches="tight")
     plt.close(fig)
 
 
 def predicciones(indice):
+    """Predice la calidad de cada imagen del índice con la SVM, el Random Forest, la CNN y la línea base."""
     imagenes = cargar_dataset(indice, "data/processed/arreglos_64")
     X = caracteristicas(imagenes)
     salida = indice[["origen", "fruta", "calidad", "particion", "archivo"]].copy()
@@ -44,6 +49,7 @@ def predicciones(indice):
 
 
 def figura_comparacion():
+    """F1 macro de cada modelo por conjunto de evaluación."""
     fig, ax = plt.subplots(figsize=(9.5, 3.6))
     ancho = 0.2
     for i, modelo in enumerate(NOMBRES):
@@ -59,6 +65,7 @@ def figura_comparacion():
 
 
 def figura_confusion(pred):
+    """Matrices de confusión de la SVM y la CNN en prueba y en fotos propias."""
     modelos = ["svm", "cnn"]
     fig, ejes = plt.subplots(2, 2, figsize=(7, 6))
     for fila, modelo in enumerate(modelos):
@@ -79,6 +86,7 @@ def figura_confusion(pred):
 
 
 def figura_curvas_cnn():
+    """Curvas de pérdida y exactitud de las tres configuraciones de la CNN."""
     fig, ejes = plt.subplots(1, 2, figsize=(9, 3.4))
     for i in range(3):
         r = json.loads((RESULTADOS / f"cnn_{i}.json").read_text())
@@ -99,6 +107,7 @@ def figura_curvas_cnn():
 
 
 def figura_por_fruta(pred):
+    """Exactitud por fruta en prueba y en fotos propias."""
     fig, ejes = plt.subplots(1, 2, figsize=(9, 3.4), sharey=True)
     for ax, (particion, titulo) in zip(ejes, [("prueba", "Prueba"), ("propias", "Fotos propias")]):
         sub = pred[pred["particion"] == particion]
@@ -116,6 +125,7 @@ def figura_por_fruta(pred):
 
 
 def tabla_resumen():
+    """Guarda en CSV la exactitud y el F1 macro de cada modelo por conjunto."""
     filas = []
     for modelo in NOMBRES:
         r = resultados_modelo(modelo)

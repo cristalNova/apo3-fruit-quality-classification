@@ -1,3 +1,5 @@
+"""Métricas de clasificación (exactitud, F1 macro, matriz de confusión) por partición y origen, y su guardado en JSON."""
+
 import json
 from pathlib import Path
 
@@ -9,6 +11,7 @@ ORIGENES_PRUEBA = ("kaggle", "companeros", "drive2")
 
 
 def resumen(y_real, y_pred):
+    """Calcula exactitud, F1 macro, métricas por clase y matriz de confusión."""
     presentes = [c for c in CLASES if c in set(y_real)]
     informe = classification_report(y_real, y_pred, labels=CLASES, output_dict=True, zero_division=0)
     return {
@@ -21,6 +24,7 @@ def resumen(y_real, y_pred):
 
 
 def evaluar(modelo_predice, X, indice, particiones=("validacion", "prueba", "propias")):
+    """Evalúa un modelo en validación, prueba (total y por origen) y fotos propias."""
     resultados = {}
     for particion in particiones:
         mascara = (indice["particion"] == particion).to_numpy()
@@ -35,5 +39,6 @@ def evaluar(modelo_predice, X, indice, particiones=("validacion", "prueba", "pro
 
 
 def guardar(resultados, ruta):
+    """Guarda resultados en un archivo JSON."""
     Path(ruta).parent.mkdir(parents=True, exist_ok=True)
     Path(ruta).write_text(json.dumps(resultados, indent=2, ensure_ascii=False), encoding="utf-8")
