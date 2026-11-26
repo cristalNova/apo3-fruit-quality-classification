@@ -6,7 +6,7 @@ Proyecto final del curso **Algoritmos y Programación III (2026-2)**, Ingenierí
 
 | Nombre | GitHub |
 |---|---|
-| Cristina Angulo | [@cristalNova](https://github.com/cristalNova) |
+| Cristina Angulo (A00404027) | [@cristalNova](https://github.com/cristalNova) |
 | Samuel Navia (A00405006) |  |
 
 ## Objetivo
