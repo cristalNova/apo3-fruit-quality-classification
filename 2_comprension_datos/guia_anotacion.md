@@ -43,4 +43,4 @@ Las imágenes que no cumplen estas condiciones se excluyen del conjunto anotado 
 
 ## 4. Registro de la anotación
 
-Cada fruta anotada se registra en `data/propias/anotaciones.csv` con las columnas `archivo`, `fruta`, `calidad`, `tamano`, `fecha` y `lugar` (véase [`data/README.md`](../data/README.md)). Los valores de `calidad` son exactamente `buena`, `regular` o `mala`; las imágenes excluidas por la sección 1 no se registran.
+Cada fruta anotada se registra en `data/propias/anotaciones.csv` con las columnas `archivo`, `fruta` y `calidad` (véase [`data/README.md`](../data/README.md)). Los valores de `calidad` son exactamente `buena`, `regular` o `mala`; las imágenes excluidas por la sección 1 no se registran.

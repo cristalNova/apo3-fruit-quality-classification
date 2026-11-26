@@ -33,4 +33,4 @@ Todo dato o código de terceros se referencia de forma explícita.
 
 ## Anotaciones propias
 
-Las anotaciones se registran en `data/propias/anotaciones.csv` con las columnas: `archivo`, `fruta`, `calidad`, `tamano`, `fecha` y `lugar`.
+Las 106 fotos propias usadas como prueba externa están en `data/propias/` (96 de calidad buena y 10 regular; 64 manzanas, 25 limones y 17 naranjas), reducidas a 1600 píxeles en su lado mayor para que el repositorio pese unos 32 MB; los originales no se versionan. Sus etiquetas están en `data/propias/anotaciones.csv` con las columnas `archivo`, `fruta` y `calidad`.
